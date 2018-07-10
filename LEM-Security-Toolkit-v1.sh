@@ -2,7 +2,7 @@
 
 #############################################################################
 #                    Created By: The LEM Security Team                      #
-#	                        Started 07/08/2018                       #
+#	                        Started 07/08/2018                              #
 #############################################################################
 
 #clears the screen
@@ -41,12 +41,14 @@ echo "+       Choose what you would like to do?   +"
 echo "+                                           +"
 echo "+    1. Hashing                             +"
 echo "+    2. Log/System Parsing                  +"
-echo "+    3. Hardware Information                +"
+echo "+    3. DNS Server Configuration            +"
 echo "+    4. System Administration               +"
 echo "+    5. Firewall Configuration              +"
 echo "+    6. Suricata IDS Configuration          +"
 echo "+    7. System Information                  +"
 echo "+    8. Drive Wipe                          +"
+echo "+    9. Restart Device                      +"
+echo "+   10. Shutdown Device                     +"
 echo "+                                           +"
 echo "+++++++++++++++++++++++++++++++++++++++++++++"
 
@@ -191,56 +193,63 @@ fi
 
 if [ "$answer" == "3" ]; then
 
-	#creates hardware information menu
+	#creates DNS setup menu
 	echo "+++++++++++++++++++++++++++++++++++++++++++++"
-	echo "+               Hardware Menu               +"
+	echo "+               DNS Menu                    +"
 	echo "+                                           +"
-	echo "+    1. CPU Information                     +"
-	echo "+    2. PCI Information                     +"
-	echo "+    3. RAM Information                     +"
-	echo "+    4. Bios Information                    +"
-	echo "+    5. All Hardware Information            +"
+	echo "+    1. Start DNS Server (default)          +"
+	echo "+    2. Stop DNS Server                     +"
 	echo "+                                           +"	
 	echo "+++++++++++++++++++++++++++++++++++++++++++++"
 
-	read -p "Please pick a number: " hardware
+	read -p "Please pick a number: " DNS
 
 	clear
 
-	case "$hardware" in
-	#gets cpu information and prints it to a file
+	case "$DNS" in
+	#Starts the DNS server
 	1)
 
-		lscpu 
+		echo "Would you like to enable the DNS server at boot? (y/n)"
+		
+		read atboot
+		
+		if [ "$atboot" == "y" ]; then 
+	
+			systemctl start bind9 && systemctl enable bind9
+			
+			echo "DNS server started and will now run at boot"
 
+		else
+		
+			echo "DNS server started"
+			
+			systemctl start bind9
+			
+		fi	
 		;;
 
-	#Lists all the PCI info
+	#Stops the DNS server
 	2)
 
-		lspci
-
-		;;
-
-	#Lists all RAM info
-	3)
-
-		dmidecode -t memory
-
-		;;
-
-	4)
-
-		dmidecode -t bios
-
-		;;
-
-	5)
-
-		dmidecode >> ALLInfo.txt
+		echo "Would you like to disable the DNS server at boot? (y/n)"
+		
+		read atboot1
+		
+		if [ "$atboot1" == "y" ]; then 
 	
-		echo "All hardware info written to file ALLInfo.txt in your CWD"
+			systemctl stop bind9 && systemctl disable bind9
+			
+			echo "DNS server stopped and will no longer run at boot"
 
+		else
+		
+			echo "DNS server stopped"
+			
+			systemctl stop bind9
+			
+		fi		
+		
 		;;
 		
 	*)
@@ -573,8 +582,8 @@ if [ "$answer" == "5" ]; then
 	
 	#Saves current configuration
 	6)
-
-		iptables-save
+	
+		/etc/init.d/iptables-persistent save 
 
 		;;
 		
@@ -714,7 +723,7 @@ if [ "$answer" == "8" ]; then
 	#Wiping the entire drive
 	1)	
 
-		echo "What is the path of the drive you want to wipe? (/dev/****) or run (df -h) to see all drive paths"
+		echo "What is the path of the drive you want to wipe? (/dev/****) or run (lsblk) to see all drive paths"
 
 		read letter
 
@@ -723,6 +732,8 @@ if [ "$answer" == "8" ]; then
 		read check2	
 
 		if [ "$check2" == "y" ]; then 
+		
+			echo "Wiping drive, this will take awhile"
 	
 			dd if=/dev/zero of=/dev/$letter bs=1M
 	
@@ -744,4 +755,25 @@ if [ "$answer" == "8" ]; then
 
 	esac
 	
+fi
+
+#Reboots the Device
+if [ "$answer" == "9" ]; then
+
+	echo "Restarting the system"
+	
+	sleep 5
+	
+	reboot
+fi
+
+#Shutsdown the device
+if [ "$answer" == "10" ]; then
+	
+	echo "Shutting down the system"
+	
+	sleep 5
+	
+	poweroff 
+
 fi
