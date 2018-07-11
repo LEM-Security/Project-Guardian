@@ -45,7 +45,7 @@ echo "+    3. DNS Server Configuration            +"
 echo "+    4. System Administration               +"
 echo "+    5. Firewall Configuration              +"
 echo "+    6. Suricata IDS Configuration          +"
-echo "+    7. System Information                  +"
+echo "+    7. DHCP Server Configuration           +"
 echo "+    8. Drive Wipe                          +"
 echo "+    9. Restart Device                      +"
 echo "+   10. Shutdown Device                     +"
@@ -605,7 +605,7 @@ if [ "$answer" == "6" ]; then
 	echo "+++++++++++++++++++++++++++++++++++++++++++++"
 	echo "+          Suricata IDS Menu                +"
 	echo "+                                           +"
-	echo "+    1. Start Suricata                      +"
+	echo "+    1. Start Suricata (default)            +"
 	echo "+                                           +"
 	echo "+++++++++++++++++++++++++++++++++++++++++++++"
 
@@ -616,7 +616,7 @@ if [ "$answer" == "6" ]; then
 	case "$suricata" in
 	
 	1)
-	
+		suricata -c /etc/suricata/suricata.yaml -i eth0
 	
 		;;
 	
@@ -629,79 +629,77 @@ if [ "$answer" == "6" ]; then
 		;;
 		
 	esac
-	
+fi	
 	
 if [ "$answer" == "7" ]; then
 
-	#creates system information menu
+	#creates DHCP setup menu
 	echo "+++++++++++++++++++++++++++++++++++++++++++++"
-	echo "+                System Menu                +"
+	echo "+               DHCP Menu                   +"
 	echo "+                                           +"
-	echo "+    1. Kernal Version                      +"
-	echo "+    2. Hostname                            +"
-	echo "+    3. IP Address                          +"
-	echo "+    4. MAC Address                         +"	
-	echo "+    5. Check Enabled Services              +"
-	echo "+    6. Check Disabled Services             +"
-	echo "+                                           +"
+	echo "+    1. Start DHCP Server (default)         +"
+	echo "+    2. Stop DHCP Server                    +"
+	echo "+                                           +"	
 	echo "+++++++++++++++++++++++++++++++++++++++++++++"
 
-	read -p "Please pick a number: " system
+	read -p "Please pick a number: " DHCP
 
 	clear
-	
-	case "$system" in
-	#Gets Kernel Version of the system
+
+	case "$DHCP" in
+	#Starts the DHCP server
 	1)
 
-		uname -r
+		echo "Would you like to enable the DHCP server at boot? (y/n)"
+		
+		read atboot
+		
+		if [ "$atboot" == "y" ]; then 
+	
+			systemctl start isc-dhcp-server && systemctl enable isc-dhcp-server
+			
+			echo "DHCP server started and will now run at boot"
 
+		else
+		
+			echo "DHCP server started"
+			
+			systemctl start isc-dhcp-server
+			
+		fi	
 		;;
 
-	#Gets the hostname of the system
+	#Stops the DHCP server
 	2)
 
-		cat /etc/hostname
+		echo "Would you like to disable the DHCP server at boot? (y/n)"
+		
+		read atboot1
+		
+		if [ "$atboot1" == "y" ]; then 
+	
+			systemctl stop isc-dhcp-server && systemctl disable isc-dhcp-server
+			
+			echo "DHCP server stopped and will no longer run at boot"
 
+		else
+		
+			echo "DHCP server stopped"
+			
+			systemctl stop isc-dhcp-server
+			
+		fi		
+		
 		;;
-
-	#Gets the IP address of the system
-	3)
-
-		ip a | grep inet
-
-		;;
-
-	#Gets the MAC Address of the system
-	4)
-
-		ip a | grep ether
-
-		;;
-
-	#Check enabled services
-	5)
-
-		systemctl list-unit-files | grep enabled | less
-
-		;;
-
-	#Check disabled services
-	6)
-
-		systemctl list-unit-files | grep disabled | less
-
-		;;
-
-	*)	
-
+		
+	*)
 		echo "Error! Unknown option, please try again."
 		
 		exit 1
 		
 		;;
 
-	esac
+	esac	
 	
 fi
 
@@ -711,7 +709,7 @@ if [ "$answer" == "8" ]; then
 	echo "+++++++++++++++++++++++++++++++++++++++++++++"
 	echo "+              Drive Wipe Menu              +"
 	echo "+                                           +"
-	echo "+    1. Full Drive Wipe                     +"
+	echo "+    1. Secure Drive Wipe                   +"
 	echo "+                                           +"	
 	echo "+++++++++++++++++++++++++++++++++++++++++++++"
 
@@ -733,7 +731,7 @@ if [ "$answer" == "8" ]; then
 
 		if [ "$check2" == "y" ]; then 
 		
-			echo "Wiping drive, this will take awhile"
+			echo "Wiping drive, this will take a while"
 	
 			dd if=/dev/zero of=/dev/$letter bs=1M
 	
