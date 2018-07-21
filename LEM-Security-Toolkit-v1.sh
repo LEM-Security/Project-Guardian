@@ -606,7 +606,8 @@ if [ "$answer" == "6" ]; then
 	echo "+          Suricata IDS Menu                +"
 	echo "+                                           +"
 	echo "+    1. Start Suricata (default)            +"
-	echo "+                                           +"
+	echo "+    2. Enable a Rule                       +"                    
+	echo "+    3. Disable a Rule                      +"
 	echo "+++++++++++++++++++++++++++++++++++++++++++++"
 
 	read -p "Please pick a number: " suricata
@@ -620,8 +621,24 @@ if [ "$answer" == "6" ]; then
 	
 		;;
 	
+	2)	
+			echo "What is the SID for the rule you want to enable?"
+			read sid
+			sed -i '$ a 1:$sid' /etc/pulledpork/enablesid.conf
+			pulled pork.pl -c /etc/pulledpork/pulledpork.conf
+			suricata -c /etc/suricata/suricata.yaml -i eth0
+			;;
+			
+	3)
+			echo "What is the SID for the rule you want to disable?"
+			read sid
+			sed -i '$ a 1:$sid' /etc/pulledpork/disablesid.conf
+			pulled pork.pl -c /etc/pulledpork/pulledpork.conf
+			suricata -c /etc/suricata/suricata.yaml -i eth0
+			;;
+			
 	*)
-		
+			
 		echo "Error! Unknown option, please try again."
 		
 		exit 1
