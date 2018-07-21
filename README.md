@@ -1,4 +1,7 @@
 # Project-Guardian
+
+![alt text](https://github.com/LEM-Security/Project-Guardian/blob/master/projguardian.png "Project Guardian")
+
 <p><strong>Overview</strong></p>
 <p>All of the files here were developed by the LEM Security team and are intended for use with Project Guardian an open source IDS/Firewall designed around portability.</p> 
 
