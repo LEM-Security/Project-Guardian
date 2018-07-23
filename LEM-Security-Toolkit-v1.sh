@@ -624,16 +624,16 @@ if [ "$answer" == "6" ]; then
 	2)	
 			echo "What is the SID for the rule you want to enable?"
 			read sid
-			sed -i '$ a 1:$sid' /etc/pulledpork/enablesid.conf
-			pulled pork.pl -c /etc/pulledpork/pulledpork.conf
+			sed -i '$ a enablesid $sid' /etc/oinkmaster.conf
+			oinkmaster -C /etc/oinkmaster.conf -o /etc/suricata/rules
 			suricata -c /etc/suricata/suricata.yaml -i eth0
 			;;
 			
 	3)
 			echo "What is the SID for the rule you want to disable?"
 			read sid
-			sed -i '$ a 1:$sid' /etc/pulledpork/disablesid.conf
-			pulled pork.pl -c /etc/pulledpork/pulledpork.conf
+			sed -i '$ a disablesid $sid' /etc/oinkmaster.conf
+			oinkmaster -C /etc/oinkmaster.conf -o /etc/suricata/rules
 			suricata -c /etc/suricata/suricata.yaml -i eth0
 			;;
 			
