@@ -8,7 +8,9 @@
 <p><strong> LEM-Security-Toolkit-v.1 </strong></p>
 <p>This script is designed to be used with Project Guardian to be able to make configuration changes as well as administer the device.</p> 
 
-
+<p><strong> Project Guardian Website Content </strong></p>
+<p>This is version 1.0 of the Website content that is hosted on Project Guardian.</p>
+  
 <p>Feel free to download any of the files in this repo or make changes to them to help and improve the project.</p> 
 
 <p>Thank you,</p>
