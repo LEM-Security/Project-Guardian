@@ -1,5 +1,11 @@
 #!/bin/bash
 
+############################################################
+#           Script created by LEM Security LLC             #
+#              For use with Project Guardian               #
+#                       V.1 7/30/2018                      #
+############################################################
+
 #Forces to run as root
 if [[ $EUID -ne 0 ]]; then
    echo "This script must be run as root" 
