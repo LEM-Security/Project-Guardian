@@ -8,7 +8,7 @@
 <p>All of the files here were developed by the LEM Security team and are intended for use with Project Guardian an open source IDS/Firewall designed around portability. This project is built on the Odroid platform which offers ample resources that allow this setup to run flawlessly without issues and with out the device being a bottleneck.</p> 
 
 <p><strong> LEM-Security-Toolkit-v.1 </strong></p>
-<p>This script is designed to be used with Project Guardian to be able to make configuration changes as well as administer the device. Please use the provided MD5 hash to verify the contents of the toolkit before use.</p> 
+<p>This script is designed to be used with Project Guardian to be able to make configuration changes as well as administer the device.</p> 
 
 <p><strong> Project Guardian Website Content </strong></p>
 <p>This is version 1.0 of the Website content that is hosted on Project Guardian.</p>
