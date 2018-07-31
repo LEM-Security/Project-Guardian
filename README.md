@@ -19,4 +19,4 @@
 <p>Feel free to download any of the files in this repo or make changes to them to help and improve the project.</p> 
 
 <p>Thank you,</p>
-<p>LEM Security Dev. Team</p>
+<p>LEM Security LLC Team</p>
