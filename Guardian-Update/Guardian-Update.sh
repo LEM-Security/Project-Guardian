@@ -36,11 +36,13 @@ if [ "$answer" == "y" ]; then
         echo "###################################################################"
 
 	#Makes permission changes as required and moves the files to proper locations
-	chmod 777 Project-Guardian/LEM-Security-Toolkit-v.1/LEM-Security-Toolkit-v.1.sh
+	chmod 777 Project-Guardian/LEM-Security-Toolkit/LEM-Security-Toolkit-v.1.sh
 
-	mv Project-Guardian/LEM-Security-Toolkit-v.1/LEM-Security-Toolkit-v.1.sh /usr/local/bin/LEMSEC-TK
+	mv Project-Guardian/LEM-Security-Toolkit/LEM-Security-Toolkit-v.1.sh /usr/local/bin/LEMSEC-TK
 
-	echo "New LEMSEC-TK installed!"
+	echo "New LEMSEC-TK version installed!"
+
+	echo "###################################################################"	
 
 	sleep 5
 
@@ -52,7 +54,17 @@ if [ "$answer" == "y" ]; then
 
 	mv Project-Guardian/Project\ Guardian\ Website/index_htm_files /var/www/html
 
+	chown odroid:odroid /var/www/html/administration.htm
+
+	chown odroid:odroid /var/www/html/index.htm
+
+	chown odroid:odroid /var/www/html/help.htm
+
+	chown odroid:odroid /var/www/html/index_htm_files
+
 	echo "New website version installed!"
+
+	echo "###################################################################"	
 
 	sleep 5
 
