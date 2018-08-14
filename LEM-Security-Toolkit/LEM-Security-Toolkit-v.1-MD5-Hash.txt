@@ -1,0 +1,4 @@
+MD5 Hash for LEM-Security-Toolkit-v.1.sh please use to verify before installation
+
+aa7f63237f7da9fb285df49ac4cc5d42  LEM-Security-Toolkit-v.1.sh
+
