@@ -21,4 +21,4 @@ No Warranty. CODE AND SOFTWARE IS PROVIDED AS IS. LEM SECURITY LLC MAKES NO WARR
 <p>Feel free to download any of the files in this repo or make changes to them to help and improve the project.</p> 
 
 <p>Thank you,</p>
-<p>LEM Security LLC Team</p>
+<p>LEM Security LLC team</p>
